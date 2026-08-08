@@ -1,125 +1,162 @@
-```javascript
-const express = require('express');
+const express = require("express");
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
-// ==========================================
-// ECLIPSEDPLAYBOT — SERVER
-// ==========================================
-
 app.use(express.json());
+
 
 // ==========================================
 // HEALTH CHECK
 // ==========================================
 
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).json({
-        status: 'OK',
-        message: 'EclipsedPlayBot by Eclipsed Team is running',
-        timestamp: new Date().toISOString(),
-        service: 'EclipsedPlayBot',
-        creator: 'Eclipsed Team',
-        version: '1.0.0'
+        status: "OK",
+        message: "EclipsedPlayBot by Eclipsed Team is running",
+        service: "EclipsedPlayBot",
+        version: "1.0.0",
+        timestamp: new Date().toISOString()
     });
 });
+
 
 // ==========================================
 // ROOT
 // ==========================================
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
     res.json({
-        message: '🌑 EclipsedPlayBot by Eclipsed Team',
-        status: 'Server is running smoothly',
+        message: "EclipsedPlayBot by Eclipsed Team",
+        status: "Running",
         endpoints: {
-            health: '/health',
-            status: '/status'
+            health: "/health",
+            status: "/status"
         }
     });
 });
+
 
 // ==========================================
 // STATUS
 // ==========================================
 
-app.get('/status', (req, res) => {
+app.get("/status", (req, res) => {
+
     res.json({
+
         bot: {
-            name: 'EclipsedPlayBot',
-            creator: 'Eclipsed Team',
-            version: '1.0.0',
-            status: 'Active and Running'
+            name: "EclipsedPlayBot",
+            team: "Eclipsed Team",
+            version: "1.0.0",
+            status: "Online"
         },
+
         server: {
-            node_version: process.version,
-            uptime: Math.floor(process.uptime()) + ' seconds',
+            node: process.version,
+            uptime: Math.floor(process.uptime()) + " seconds",
             memory:
                 Math.round(
                     process.memoryUsage().heapUsed / 1024 / 1024
-                ) + ' MB'
+                ) + " MB"
         }
+
     });
+
 });
+
 
 // ==========================================
 // START SERVER
 // ==========================================
 
-const server = app.listen(PORT, '0.0.0.0', () => {
-console.log('=================================');
-console.log('ECLIPSEDPLAYBOT');
-console.log('Eclipsed Team');
-console.log('Server started successfully!');
-console.log('Port:', PORT);
-console.log('Environment:', process.env.NODE_ENV || 'development');
-console.log('Started at:', new Date().toISOString());
-console.log('=================================');
+const server = app.listen(PORT, "0.0.0.0", function () {
+
+    console.log("==============================");
+    console.log("ECLIPSEDPLAYBOT");
+    console.log("Eclipsed Team");
+    console.log("Server started successfully!");
+    console.log("Port: " + PORT);
+    console.log("Environment: " + (process.env.NODE_ENV || "development"));
+    console.log("Started: " + new Date().toISOString());
+    console.log("==============================");
+
 
     startBot();
+
 });
 
+
 // ==========================================
-// BOT STARTER
+// BOT LOADER
 // ==========================================
 
 function startBot() {
+
     try {
-        console.log('🤖 Loading EclipsedPlayBot...');
 
-        const botModule = require('./bot');
+        console.log("Loading bot...");
 
-        if (botModule && botModule.bot) {
-            console.log('✅ EclipsedPlayBot loaded successfully!');
-            console.log('🎴 Game systems: Ready for development');
-            console.log('💬 Commands: Ready');
-            console.log('🛡️ Core system: Operational');
+        const bot = require("./bot");
+
+
+        if (bot && bot.bot) {
+
+            console.log("Bot loaded successfully!");
+            console.log("Systems ready");
+
         } else {
-            console.log('⚠️ Bot loaded but may have issues');
+
+            console.log("Bot file loaded without export");
+
         }
 
+
     } catch (error) {
-        console.error('❌ Bot loading failed:', error.message);
-        console.log('ℹ️ Server is running, but bot features are disabled');
+
+        console.log("Bot loading error:");
+        console.log(error.message);
+
     }
+
 }
 
+
+
 // ==========================================
-// GRACEFUL SHUTDOWN
+// SHUTDOWN
 // ==========================================
 
 function shutdown(signal) {
-    console.log("Received " + signal + " - shutting down gracefully...");
 
-    server.close(() => {
+    console.log("");
+    console.log("Shutdown signal received: " + signal);
+
+
+    server.close(function () {
+
         console.log("Server closed");
+
         process.exit(0);
+
     });
+
 }
 
-process.on('SIGINT', () => shutdown('SIGINT'));
-process.on('SIGTERM', () => shutdown('SIGTERM'));
+
+process.on("SIGINT", function () {
+
+    shutdown("SIGINT");
+
+});
+
+
+process.on("SIGTERM", function () {
+
+    shutdown("SIGTERM");
+
+});
+
 
 module.exports = app;
-```
