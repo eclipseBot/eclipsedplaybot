@@ -68,16 +68,14 @@ app.get('/status', (req, res) => {
 // ==========================================
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log('=================================');
-    console.log('🌑 ECLIPSEDPLAYBOT');
-    console.log('👥 Eclipsed Team');
-    console.log('🚀 Server started successfully!');
-    console.log(`📍 Port: ${PORT}`);
-    console.log(
-        `🌐 Environment: ${process.env.NODE_ENV || 'development'}`
-    );
-    console.log(`🕒 Started at: ${new Date().toISOString()}`);
-    console.log('=================================');
+console.log('=================================');
+console.log('ECLIPSEDPLAYBOT');
+console.log('Eclipsed Team');
+console.log('Server started successfully!');
+console.log('Port:', PORT);
+console.log('Environment:', process.env.NODE_ENV || 'development');
+console.log('Started at:', new Date().toISOString());
+console.log('=================================');
 
     startBot();
 });
