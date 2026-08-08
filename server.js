@@ -110,10 +110,10 @@ function startBot() {
 // ==========================================
 
 function shutdown(signal) {
-    console.log(`\n🛑 Received ${signal} - Shutting down gracefully...`);
+    console.log("Received " + signal + " - shutting down gracefully...");
 
     server.close(() => {
-        console.log('✅ Server closed');
+        console.log("Server closed");
         process.exit(0);
     });
 }
