@@ -97,7 +97,7 @@ bot.onText(/\/start/, async (msg) => {
     const image = path.join(
         __dirname,
         "assets",
-        "welcome.png"
+        "Welcome.png"
     );
 
 
