@@ -110,7 +110,9 @@ bot.onText(/\/start/, async (msg) => {
                 image,
                 {
                     caption:
-                    "🌑 Добро пожаловать в EclipsedPlayBot",
+                    "🌑 Добро пожаловать Eclipse!
+
+⚔️ Сражайся на арене, обменивайся картами, ищи друзей, и развивайтесь вместе ✨",
                     ...keyboard
                 }
             );
@@ -119,7 +121,9 @@ bot.onText(/\/start/, async (msg) => {
 
             await bot.sendMessage(
                 chatId,
-                "🌑 Добро пожаловать в EclipsedPlayBot",
+                "🌑 Добро пожаловать Eclipse!
+
+⚔️ Сражайся на арене, обменивайся картами, ищи друзей, и развивайтесь вместе ✨",
                 keyboard
             );
 
