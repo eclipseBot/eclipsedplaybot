@@ -138,7 +138,7 @@ function buildProfileText(user, telegramUser) {
     const title = user.title || 'Не выбран';
 
     return `👤 ПРОФИЛЬ (${username})
-``📜 Титул: ${title}``
+📜 Титул: ${title}
 
 💠 Осколки — ${user.shards}
 ✨ Звёзды — ${user.stars}
@@ -187,7 +187,6 @@ bot.onText(/^\/start$/, async (msg) => {
 
     const chatId = msg.chat.id;
 
-    // Создаём / обновляем пользователя в SQLite
     await ensureUser(msg.from);
 
     const keyboard = getMainKeyboard();
@@ -195,7 +194,7 @@ bot.onText(/^\/start$/, async (msg) => {
     const image = path.join(
         __dirname,
         'assets',
-        'welcome.png'
+        'Welcome.png'
     );
 
     const welcomeText =
@@ -245,7 +244,6 @@ bot.onText(/^\/start$/, async (msg) => {
 
 bot.on('message', async (msg) => {
 
-    // Не обрабатываем команды здесь
     if (msg.text && msg.text.startsWith('/')) {
         return;
     }
@@ -257,7 +255,6 @@ bot.on('message', async (msg) => {
         return;
     }
 
-    // Обновляем данные пользователя в БД
     await ensureUser(msg.from);
 
     // ===============================
@@ -300,12 +297,6 @@ bot.on('message', async (msg) => {
                                 text: '💼 Мои колоды',
                                 callback_data: 'decks'
                             }
-                        ],
-                        [
-                            {
-                                text: '(Назад)',
-                                callback_data: 'back'
-                            }
                         ]
                     ]
                 }
@@ -335,12 +326,6 @@ bot.on('message', async (msg) => {
                             {
                                 text: '🏰 Башня',
                                 callback_data: 'tower'
-                            }
-                        ],
-                        [
-                            {
-                                text: '(Назад)',
-                                callback_data: 'back'
                             }
                         ]
                     ]
@@ -473,14 +458,12 @@ bot.on('callback_query', async (query) => {
     const userId = query.from.id;
     const data = query.data;
 
-    // Убираем "часики" с кнопки
     try {
         await bot.answerCallbackQuery(query.id);
     } catch (error) {
         // Ничего критичного
     }
 
-    // Обновляем пользователя
     await ensureUser(query.from);
 
     // ===============================
@@ -500,12 +483,6 @@ bot.on('callback_query', async (query) => {
                             {
                                 text: '💼 Мои колоды',
                                 callback_data: 'decks'
-                            }
-                        ],
-                        [
-                            {
-                                text: '(Назад)',
-                                callback_data: 'back'
                             }
                         ]
                     ]
@@ -538,7 +515,6 @@ bot.on('callback_query', async (query) => {
             ]
         ];
 
-        // Админская кнопка видна только руководству
         if (isAdmin(userId)) {
 
             buttons.push([
@@ -548,13 +524,6 @@ bot.on('callback_query', async (query) => {
                 }
             ]);
         }
-
-        buttons.push([
-            {
-                text: '(Назад)',
-                callback_data: 'back'
-            }
-        ]);
 
         await bot.sendMessage(
             chatId,
@@ -636,13 +605,6 @@ bot.on('callback_query', async (query) => {
                                 text: '➡️',
                                 callback_data: 'next'
                             }
-                        ],
-
-                        [
-                            {
-                                text: '(Назад)',
-                                callback_data: 'menu'
-                            }
                         ]
                     ]
                 }
@@ -716,12 +678,6 @@ bot.on('callback_query', async (query) => {
                             {
                                 text: '➕ Добавить колоду',
                                 callback_data: 'add_deck'
-                            }
-                        ],
-                        [
-                            {
-                                text: 'Назад',
-                                callback_data: 'cards'
                             }
                         ]
                     ]
