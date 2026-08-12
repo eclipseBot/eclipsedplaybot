@@ -137,7 +137,7 @@ function buildProfileText(user, telegramUser) {
 
     const title = user.title || 'Не выбран';
 
-    return `👤 ПРОФИЛЬ (${MENTION})
+    return `👤 ПРОФИЛЬ (${username})
 ``📜 Титул: ${title}``
 
 💠 Осколки — ${user.shards}
